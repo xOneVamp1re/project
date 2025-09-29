@@ -1,0 +1,38 @@
+{
+	"git.autofetch": true,
+	"cSpell.language": "en, ru",
+
+	"[html][css][scss][javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.tabSize": 2
+	},
+	"editor.tabSize": 2,
+	"scm.alwaysShowActions": true,
+	"editor.formatOnSave": true,
+	"terminal.integrated.defaultProfile.osx": "bash",
+	"terminal.integrated.defaultProfile.linux": "bash",
+	"cSpell.words": [],
+	"liveServer.settings.port": 5501,
+
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.requireConfig": true,
+
+	"tailwindCSS.includeLanguages": {
+		"scss": "css",
+		"postcss": "css"
+	},
+	"files.associations": {
+		"*.scss": "tailwindcss",
+		"*.css": "tailwindcss"
+	},
+	"css.validate": false,
+	"scss.validate": false,
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"tailwindCSS.experimental": {
+		"classRegex": [["@apply\\s*([^;]+)", "'([^']*)'"]]
+	}
+}
