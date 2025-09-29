@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core'
+/* import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 
@@ -56,6 +56,43 @@ async function bootstrap() {
 		],
 		preflightContinue: false,
 		optionsSuccessStatus: 204,
+	})
+
+	await app.listen(port)
+}
+
+bootstrap() */
+
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { ConfigService } from '@nestjs/config'
+
+async function bootstrap() {
+	const app = await NestFactory.create(AppModule)
+	const configService = app.get(ConfigService)
+
+	app.setGlobalPrefix('api')
+
+	const port = configService.get('PORT') || 4200
+
+	// Разрешаем все домены временно для диагностики
+	const allowedOrigins = [
+		'http://localhost:3000',
+		'http://192.168.8.83:3000',
+		'http://127.0.0.1:3000',
+		'http://localhost:3001',
+		'http://localhost:4200',
+		'https://frontend-5s9m.vercel.app',
+		'https://www.frontend-5s9m.vercel.app',
+	]
+
+	app.enableCors({
+		origin: (origin, callback) => {
+			callback(null, true)
+		},
+		credentials: true,
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+		allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 	})
 
 	await app.listen(port)
