@@ -10,8 +10,8 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"railway:install": "npm install --legacy-peer-deps",
+		"preinstall": "npm config set legacy-peer-deps true",
+		"install": "npm install --legacy-peer-deps",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
