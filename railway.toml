@@ -1,5 +1,5 @@
 [build]
-builder = "railpack"
+builder = "nixpacks"
 
 [build.scripts]
 install = "npm install --legacy-peer-deps"
