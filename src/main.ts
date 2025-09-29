@@ -18,6 +18,7 @@ async function bootstrap() {
 					clientUrl,
 					'https://frontend-5s9m.vercel.app',
 					'https://frontend-5s9m.vercel.app/',
+					'https://www.frontend-5s9m.vercel.app',
 			  ]
 			: [
 					'http://localhost:3000',
@@ -31,7 +32,13 @@ async function bootstrap() {
 		origin: (origin, callback) => {
 			if (!origin) return callback(null, true)
 
-			if (allowedOrigins.indexOf(origin) !== -1) {
+			const isAllowed = allowedOrigins.some(
+				(allowedOrigin) =>
+					origin === allowedOrigin ||
+					origin.startsWith(allowedOrigin.replace(/\/$/, ''))
+			)
+
+			if (isAllowed) {
 				callback(null, true)
 			} else {
 				callback(new Error('Not allowed by CORS'))
@@ -39,7 +46,16 @@ async function bootstrap() {
 		},
 		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-		allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+		allowedHeaders: [
+			'Content-Type',
+			'Authorization',
+			'X-Requested-With',
+			'Access-Control-Allow-Origin',
+			'Access-Control-Allow-Headers',
+			'Access-Control-Allow-Methods',
+		],
+		preflightContinue: false,
+		optionsSuccessStatus: 204,
 	})
 
 	await app.listen(port)
