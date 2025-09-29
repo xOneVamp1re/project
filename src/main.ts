@@ -7,32 +7,42 @@ async function bootstrap() {
 	const configService = app.get(ConfigService)
 
 	app.setGlobalPrefix('api')
+
+	const nodeEnv = configService.get('NODE_ENV') || 'development'
+	const clientUrl = configService.get('CLIENT_URL')
+	const port = configService.get('PORT') || 4200
+
 	const allowedOrigins =
-		configService.get('NODE_ENV') === 'production'
+		nodeEnv === 'production'
 			? [
-					configService.get('CLIENT_URL'), // ваш продакшен фронтенд
-					'https://frontend-5s9m.vercel.app/', // замените на реальный домен
+					clientUrl,
+					'https://frontend-5s9m.vercel.app',
+					'https://frontend-5s9m.vercel.app/',
 			  ]
 			: [
 					'http://localhost:3000',
 					'http://192.168.8.83:3000',
 					'http://127.0.0.1:3000',
 					'http://localhost:3001',
+					'http://localhost:4200',
 			  ]
 
 	app.enableCors({
-		origin: allowedOrigins,
+		origin: (origin, callback) => {
+			if (!origin) return callback(null, true)
+
+			if (allowedOrigins.indexOf(origin) !== -1) {
+				callback(null, true)
+			} else {
+				callback(new Error('Not allowed by CORS'))
+			}
+		},
 		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 		allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 	})
 
-	const port = configService.get('PORT') || 4200
-
 	await app.listen(port)
-	console.log(`Application is running on: http://localhost:${port}`)
-	console.log(`Environment: ${configService.get('NODE_ENV') || 'development'}`)
-	console.log(`Allowed origins: ${allowedOrigins.join(', ')}`)
 }
 
 bootstrap()
