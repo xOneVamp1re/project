@@ -10,7 +10,6 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
-		"install": "npm install --legacy-peer-deps",
 		"prebuild": "rimraf dist",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -23,8 +22,7 @@
 		"test:watch": "jest --watch",
 		"test:cov": "jest --coverage",
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-		"test:e2e": "jest --config ./test/jest-e2e.json",
-		"build:prod": "npm run build && set NODE_ENV=production&& node dist/main.js"
+		"test:e2e": "jest --config ./test/jest-e2e.json"
 	},
 	"dependencies": {
 		"@nestjs/common": "^8.0.0",
